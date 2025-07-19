@@ -1,0 +1,10 @@
+.postInteractions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.interactionIcons {
+  display: flex;
+  gap: 16px;
+}
