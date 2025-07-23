@@ -1,5 +1,10 @@
 import express from "express";
-import { getUser } from "../controller/user.controller.js";
+import {
+  getUser,
+  registerUser,
+  loginUser,
+  logoutUser,
+} from "../controller/user.controller.js";
 import User from "../model/user.model.js";
 import bcrypt from "bcrypt";
 
@@ -24,5 +29,8 @@ router.post("/create", async (req, resp) => {
   }
 });
 router.get("/:username", getUser);
+router.post("/auth/register", registerUser);
+router.post("/auth/login", loginUser);
+router.post("/auth/logout", logoutUser);
 
 export default router;
