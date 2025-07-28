@@ -6,6 +6,7 @@ import pinRouter from "./routes/pin.route.js";
 import mongoose from "mongoose";
 import { connectDB } from "./utils/connectDB.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const port = process.env.PORT;
@@ -16,6 +17,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser());
 app.use("/users", userRouter);
 app.use("/comments", commentRouter);
 app.use("/pins", pinRouter);

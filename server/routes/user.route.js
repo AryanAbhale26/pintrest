@@ -4,9 +4,11 @@ import {
   registerUser,
   loginUser,
   logoutUser,
+  followUser,
 } from "../controller/user.controller.js";
 import User from "../model/user.model.js";
 import bcrypt from "bcrypt";
+import { verifyToken } from "../middlewares/verifyToken.js";
 
 const router = express.Router();
 
@@ -28,9 +30,10 @@ router.post("/create", async (req, resp) => {
     resp.status(404).json({ message: "Error in creating the User" });
   }
 });
-router.get("/:username", getUser);
+router.get("/:userName", getUser);
 router.post("/auth/register", registerUser);
 router.post("/auth/login", loginUser);
 router.post("/auth/logout", logoutUser);
+router.post("/follow/:userName", verifyToken, followUser);
 
 export default router;

@@ -34,12 +34,17 @@ const Profile = () => {
       />
       <h1>{data.displayName}</h1>
       <span>@{data.userName}</span>
-      <div className="">10 followers · 20 followings</div>
+      <div className="">
+        {data.followerCount} followers · {data.followingCount} followings
+      </div>
 
       <div className="profileInteractions">
         <Share />
         <div className="profileButtons">
-          <FollowButton />
+          <FollowButton
+            isFollowing={data.isFollowing}
+            userName={data.userName}
+          />
         </div>
         <MoreHorizontal />
       </div>

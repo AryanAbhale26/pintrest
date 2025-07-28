@@ -3,7 +3,7 @@ import Image from "../Image/Image";
 import "./Comments.css";
 import EmojiPicker from "emoji-picker-react";
 import apiRequest from "../../utils/apiRequests";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { format } from "timeago.js";
 import CommentForm from "./commentForm";
 
@@ -15,7 +15,6 @@ const Comments = ({ id }) => {
   });
   if (isPending) return "Loading.......";
   if (error) return "An error Occured" + error.message;
-  console.log(data);
   // const commentData = [
   //   {
   //     username: "John Cena",
@@ -54,14 +53,18 @@ const Comments = ({ id }) => {
         {data.map((comment, index) => (
           <div className="comment" key={index}>
             <Image
-              src={comment.user?.img || "/general/noAvatar.png"}
+              src={
+                comment.user?.img ||
+                "http://localhost:5173/general/noAvatar.png"
+              }
               w={36}
               h={36}
             />
+
             <div className="commentContent">
               <span className="commentUsername">
                 {comment.user?.displayName ||
-                  comment.user?.username ||
+                  comment.user?.userName ||
                   "Unknown"}
               </span>
               <p className="commentText">{comment.description}</p>
@@ -70,7 +73,7 @@ const Comments = ({ id }) => {
           </div>
         ))}
       </div>
-      <CommentForm />
+      <CommentForm id={id} />
     </div>
   );
 };
