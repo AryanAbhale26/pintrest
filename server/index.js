@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 import { connectDB } from "./utils/connectDB.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import fileUpload from "express-fileUpload";
+import fileUpload from "express-fileupload";
 
 const app = express();
 const port = process.env.PORT;
