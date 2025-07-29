@@ -1,0 +1,1 @@
+import{j as r}from"./index-DgtH0Sqm.js";import{G as o}from"./Gallery-Cp2YQe1L.js";import"./index-DGT-xrSd.js";import"./useBaseQuery-gpRBczeQ.js";import"./createLucideIcon-Jv87yse_.js";const p=()=>r.jsx("div",{children:r.jsx(o,{})});export{p as default};

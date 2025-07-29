@@ -1,16 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./createPage.css";
 import { Upload, X, Pencil } from "lucide-react";
 import useAuthStore from "../../utils/authStore";
 import { useNavigate } from "react-router";
 import Editor from "../../components/Editor/Editor";
+import apiRequest from "../../utils/apiRequests";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import BoardForm from "./BoardForm";
+import useEditorStore from "../../utils/editorStore";
+
+const addPost = async (post) => {
+  const res = await apiRequest.post("/pins", post, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  console.log(res); // <-- Full Axios response (data, status, headers, config, etc.)
+  return res.data; // return data for mutation
+};
 
 const CreatePage = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuthStore();
+  const { textOptions, canvasOptions, resetStore } = useEditorStore();
+
+  const formRef = useRef();
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+
+  // For new board creation
+  const [newBoard, setNewBoard] = useState("");
+  const [isNewBoardOpen, setIsNewBoardOpen] = useState(false);
 
   useEffect(() => {
     if (!currentUser) {
@@ -46,21 +65,53 @@ const CreatePage = () => {
     setPreview(null);
   };
 
-  const editImage = () => {
-    setIsEditing(true);
-  };
+  const editImage = () => setIsEditing(true);
+  const doneEditing = () => setIsEditing(false);
 
-  const doneEditing = () => {
-    setIsEditing(false);
+  // Fetch existing boards
+  const {
+    data: boards,
+    isPending,
+    error,
+  } = useQuery({
+    queryKey: ["formBoards"],
+    queryFn: () =>
+      apiRequest.get(`/boards/${currentUser._id}`).then((res) => res.data),
+  });
+
+  const handleNewBoard = () => setIsNewBoardOpen((prev) => !prev);
+
+  // Mutation for creating the pin
+  const mutation = useMutation({
+    mutationFn: addPost,
+    onSuccess: (data, variables, context) => {
+      console.log("Final Response:", data); // <-- Only the pin data
+      resetStore();
+      navigate(`/pin/${data._id}`);
+    },
+  });
+
+  const handleSubmit = () => {
+    if (isEditing) {
+      setIsEditing(false);
+    } else {
+      const formData = new FormData(formRef.current);
+      formData.append("media", file);
+      formData.append("textOptions", JSON.stringify(textOptions));
+      formData.append("canvasOptions", JSON.stringify(canvasOptions));
+      formData.append("newBoard", newBoard);
+
+      // Debug: Print form data entries
+
+      mutation.mutate(formData);
+    }
   };
 
   return (
     <div className="createPage">
       <div className="createTop">
-        <h1>{isEditing ? "Edit your pic" : "Create Page"}</h1>
-        <button onClick={isEditing ? doneEditing : undefined}>
-          {isEditing ? "Done" : "Publish"}
-        </button>
+        <h1>{isEditing ? "Edit your pic" : "Create Pin"}</h1>
+        <button onClick={handleSubmit}>{isEditing ? "Done" : "Publish"}</button>
       </div>
 
       <div className="createBottom">
@@ -111,7 +162,7 @@ const CreatePage = () => {
               />
             </label>
 
-            <form className="createForm">
+            <form className="createForm" ref={formRef}>
               <div className="createFormItem">
                 <label htmlFor="title">Title</label>
                 <input
@@ -139,15 +190,32 @@ const CreatePage = () => {
                   id="link"
                 />
               </div>
-              <div className="createFormItem">
-                <label htmlFor="board">Board</label>
-                <select name="board" id="board">
-                  <option value="">Choose a board</option>
-                  <option value="1">Board 1</option>
-                  <option value="2">Board 2</option>
-                  <option value="3">Board 3</option>
-                </select>
-              </div>
+
+              {/* Boards dropdown with new board option */}
+              {!isPending && !error && (
+                <div className="createFormItem">
+                  <label htmlFor="board">Board</label>
+                  <select name="board" id="board">
+                    <option value="">Choose a board</option>
+                    {boards?.map((board) => (
+                      <option value={board._id} key={board._id}>
+                        {board.title}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="newBoard">
+                    {newBoard && (
+                      <div className="newBoardContainer">
+                        <div className="newBoardItem">{newBoard}</div>
+                      </div>
+                    )}
+                    <div className="createBoardButton" onClick={handleNewBoard}>
+                      Create new board
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div className="createFormItem">
                 <label htmlFor="tags">Tagged topics</label>
                 <input
@@ -159,6 +227,13 @@ const CreatePage = () => {
                 <small>Don&apos;t worry, people won&apos;t see your tags</small>
               </div>
             </form>
+
+            {isNewBoardOpen && (
+              <BoardForm
+                setIsNewBoardOpen={setIsNewBoardOpen}
+                setNewBoard={setNewBoard}
+              />
+            )}
           </>
         )}
       </div>

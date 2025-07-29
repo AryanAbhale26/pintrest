@@ -1,0 +1,1 @@
+import{d as e,j as r}from"./index-DgtH0Sqm.js";import{G as t}from"./Gallery-Cp2YQe1L.js";import"./index-DGT-xrSd.js";import"./useBaseQuery-gpRBczeQ.js";import"./createLucideIcon-Jv87yse_.js";const h=()=>{let[a]=e();const s=a.get("search");return r.jsx("div",{children:r.jsx(t,{search:s})})};export{h as default};
