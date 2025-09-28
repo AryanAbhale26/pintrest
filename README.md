@@ -25,7 +25,12 @@ processed using ImageKit and Sharp for real-time optimization and transformation
 stores user data, posts, and relationships, making Pixora highly scalable and secure.
 
 ## Installation
-1. Initialize the Project (if not already):
+1.Clone the repo:
+```
+git clone https://github.com/AryanAbhale26/pintrest.git
+```
+
+2. Initialize the Project :
    ```
    npm init -y
    ```
@@ -34,7 +39,7 @@ stores user data, posts, and relationships, making Pixora highly scalable and se
    ```
    cd pixora
    ```
-5. Install Dependencies for Backend:
+4. Install Dependencies for Backend:
    ```
    cd server
    ```
@@ -42,7 +47,7 @@ stores user data, posts, and relationships, making Pixora highly scalable and se
    npm install
    ```
 
-7. Install Dependencies for Frontend:
+5. Install Dependencies for Frontend:
    ```
    cd ../frontend
    ```
