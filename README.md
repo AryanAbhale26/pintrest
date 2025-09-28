@@ -25,10 +25,10 @@ processed using ImageKit and Sharp for real-time optimization and transformation
 stores user data, posts, and relationships, making Pixora highly scalable and secure.
 
 ## Installation
-1.Clone the repo:
-```
-git clone https://github.com/AryanAbhale26/pintrest.git
-```
+1. Clone the repo:
+   ```
+   git clone https://github.com/AryanAbhale26/pintrest.git
+   ```
 
 2. Initialize the Project :
    ```
@@ -61,12 +61,12 @@ git clone https://github.com/AryanAbhale26/pintrest.git
    npm run dev
    ```
 
-3. Start the Frontend Development Server:
-```
+2. Start the Frontend Development Server:
+   ```
    npm run dev
-```
+   ```
 
-5. Open the Application:
+3. Open the Application:
    Once both servers are running, open http://localhost: in your browser to explore Pixora.
 
 ## License
