@@ -1,5 +1,4 @@
 ## Glimpse
 
-https://github.com/user-attachments/assets/b0c9fc8b-99d9-4b99-8afc-2c4fe6c868f5
-
+https://github.com/user-attachments/assets/014397f2-aae8-4e3e-97aa-754ea0f80094
 
