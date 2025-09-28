@@ -26,31 +26,43 @@ stores user data, posts, and relationships, making Pixora highly scalable and se
 
 ## Installation
 1. Initialize the Project (if not already):
+   ```
    npm init -y
+   ```
 
-2. Navigate into the Project Directory:
+3. Navigate into the Project Directory:
+   ```
    cd pixora
-
-3. Install Dependencies for Backend:
-   cd backend
+   ```
+5. Install Dependencies for Backend:
+   ```
+   cd server
+   ```
+   ```
    npm install
+   ```
 
-4. Install Dependencies for Frontend:
+7. Install Dependencies for Frontend:
+   ```
    cd ../frontend
+   ```
+   ```
    npm install
+   ```
 
 ## Usage
 1. Start the Backend Server:
-   npm start
-
-2. Start the Frontend Development Server:
+   ```
    npm run dev
+   ```
 
-3. Open the Application:
+3. Start the Frontend Development Server:
+```
+   npm run dev
+```
+
+5. Open the Application:
    Once both servers are running, open http://localhost: in your browser to explore Pixora.
-
-## Glimpse
-[Insert screenshots or demo links here]
 
 ## License
 This project is licensed under the MIT License.
